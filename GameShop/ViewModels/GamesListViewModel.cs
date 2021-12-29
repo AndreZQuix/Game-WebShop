@@ -8,25 +8,25 @@ namespace GameShop.ViewModels
 {
     public class GamesListViewModel
     {
-        public IEnumerable<Game> IEAllGames { get; set; }   // хранилище экземпляров сущности "Игра"
+        public IEnumerable<Game> IEAllGames { get; set; }   // // repository of entity "Game" instances
 
-        public string currCategory { get; set; }    // категория
-        public int PageNumber { get; private set; } // номер страницы
-        public int TotalPages { get; private set; } // всего страниц
+        public string currCategory { get; set; }    // current category
+        public int PageNumber { get; private set; }
+        public int TotalPages { get; private set; } // number of pages
 
         public GamesListViewModel(IEnumerable<Game> games, string cat, int count, int pageNumber, int pageSize)
         {
             IEAllGames = games;
             currCategory = cat;
             PageNumber = pageNumber;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);   // расчет количества страниц
+            TotalPages = (int)Math.Ceiling(count / (double)pageSize);   // calculate number of pages
         }
 
         public bool HasPreviousPage
         {
             get
             {
-                return (PageNumber > 1);    // если номер текущей страницы больше единицы, значит, предыдущая страница есть
+                return (PageNumber > 1);    // if current page number > 1, that previous page exists
             }
         }
 
@@ -34,7 +34,7 @@ namespace GameShop.ViewModels
         {
             get
             {
-                return (PageNumber < TotalPages);   // если номер текущей страницы меньше количества страниц, значит, следующая страница есть
+                return (PageNumber < TotalPages);   // if current page number < number of pages, that next page exists
             }
         }
     }

@@ -18,7 +18,7 @@ namespace GameShop
     {
         private IConfigurationRoot _confString;
 
-        public Startup(IHostEnvironment hostEnv)    //or IHostingEnviroment
+        public Startup(IHostEnvironment hostEnv)
         {
             _confString = new ConfigurationBuilder().SetBasePath(hostEnv.ContentRootPath).AddJsonFile("dbsettings.json").Build();
         }
@@ -59,7 +59,7 @@ namespace GameShop
 
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    AppDBContent content = scope.ServiceProvider.GetRequiredService<AppDBContent>(); // подключение службы для работы с БД
+                    AppDBContent content = scope.ServiceProvider.GetRequiredService<AppDBContent>(); // get service for working with database
                     DBObjects.Initialize(content);
                 }
             }

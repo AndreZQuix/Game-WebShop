@@ -25,18 +25,18 @@
 <body>
     <main>
 
-  <div class="album py-5 bg-dark"> <!--элемент Bootstrap-->
+  <div class="album py-5 bg-dark">
     <div class="container">
        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
     @{
         foreach (Game game in Model.IEAllGames)
         {
-            @Html.Partial("AllGames", game); // вывод всех элементов на странице
+            @Html.Partial("AllGames", game); //show all elements on page
         }
     }
     </div>
-        @if(Model.HasPreviousPage)   // если предыдущая страница имеется, вывод кнопки "Назад", при нажатии на которую вызывается соответствующий экшн с маршрутизацией
+        @if(Model.HasPreviousPage)   // if previous page exists, show "Previous" button with List action
         {
             <a asp-controller="Games" asp-action="List" asp-route-page="@(Model.PageNumber - 1)"
        class="btn btn-outline-light">
@@ -45,7 +45,7 @@
     </a>
         }
 
-        @if (Model.HasNextPage)  // если следующая страница имеется, вывод кнопки "Вперед", при нажатии на которую вызывается соответствующий экшн с маршрутизацией
+        @if (Model.HasNextPage)  // if next page exists, show "Next" button with List action
                 {
                  <a asp-controller="Games" asp-action="List" asp-route-page="@(Model.PageNumber + 1)"
        class="btn btn-outline-light">
