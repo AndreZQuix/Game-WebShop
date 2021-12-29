@@ -19,7 +19,7 @@ namespace GameShop.Controllers
         }
 
         [HttpGet]
-        public ViewResult Index()   // передача данных экземпляров модели "Элемент корзины" через модель представления в представление
+        public ViewResult Index()   // model "ShopCart Item" instances transmission through ViewModel to View
         {
             var items = _shopCart.getShopItems();
             _shopCart.ListShopItems = items;
@@ -29,17 +29,17 @@ namespace GameShop.Controllers
             return View(obj);
         }
 
-        public RedirectToActionResult addToCart(int id) // добавление экземпляров модели "Элемент корзины" при условии существования экземпляра и поднятого булевого флага атрибута "В наличии"
+        public RedirectToActionResult addToCart(int id) // if model "ShopCart item" instance exists and its attribute "Is available" is true, add it to Cart
         {
             var item = _gamesRep.Games.FirstOrDefault(i => i.Id == id);
             if(item != null && item.IsAvailable)
             {
                 _shopCart.AddToCart(item);
             }
-            return RedirectToAction("Index");   // переход к методу Index()
+            return RedirectToAction("Index");   // redirect to page "Index"
         }
 
-        public RedirectToActionResult deleteFromCart(int id)    // удаление экземпляров модели "Элемент корзины", переход к методу Index()
+        public RedirectToActionResult deleteFromCart(int id)    // delete model "ShopCart Item" instances and redirect to page "Index"
         {
             _shopCart.DeleteFromCart(id);
             return RedirectToAction("Index");

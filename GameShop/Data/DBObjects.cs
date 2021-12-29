@@ -10,9 +10,9 @@ namespace GameShop.Data
         {
 
             if (!content.DbCategory.Any())
-                content.DbCategory.AddRange(DictCategories.Select(c => c.Value)); // инициализация экземпляров сущности "Категория" в таблице DbCategory БД при отсутствии элементов в таблице
+                content.DbCategory.AddRange(DictCategories.Select(c => c.Value)); // if DbCategory is empty, initialize list of categories automatically
 
-            if (!content.DbGame.Any()) // инициализация экземпляров сущности "Игра" в таблице DbGame БД при отсутствии элементов в таблице
+            if (!content.DbGame.Any()) // if DbGame is empty, initialize list of items automatically
             {
                 content.AddRange(
                     new Game { Image = "/img/css.jpg", Name = "Counter-Strike: Source", Desc = "Неустаревающий командный тактический шутер", Details = "", TechReq = "", IsAvailable = true, Quantity = 15, Price = 300, Category = DictCategories["Action"] },
@@ -22,7 +22,7 @@ namespace GameShop.Data
                     new Game { Image = "/img/os.jpg", Name = "One Shot", Desc = "Сюрреалистическая приключенческая игра", Details = "", TechReq = "", IsAvailable = true, Quantity = 7, Price = 50, Category = DictCategories["Quest"] }) ;
             }
 
-            content.SaveChanges(); // сохранение изменений
+            content.SaveChanges();
         }
         private static Dictionary<string, Category> category;
         public static Dictionary<string, Category> DictCategories

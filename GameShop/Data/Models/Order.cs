@@ -10,7 +10,7 @@ namespace GameShop.Data.Models
         [BindNever]
         public int Id { get; set; } 
 
-        [Display(Name = "Введите имя")]     // получение данных клиентов с учетом требований к формату данных
+        [Display(Name = "Введите имя")]     // get client data
         [StringLength(40, MinimumLength = 2)]
         [Required(ErrorMessage = "Длина имени не менее 2-ух символов")]
         public string ClientName { get; set; }

@@ -4,10 +4,10 @@ namespace GameShop.Data.Models
 {
     public class Category
     {
-        public int Id { get; set; } // уникальный ID
-        public string CategoryName { get; set; }    // название категории
-        public string CategoryDesc { get; set; }    // описание категории
-        public List<Game> Games { get; set; }   // игры, принадлежащие категории
+        public int Id { get; set; } // unique ID
+        public string CategoryName { get; set; }    // category name
+        public string CategoryDesc { get; set; }    // category description
+        public List<Game> Games { get; set; }   // list of games that belong to category
 
     }
 }

@@ -19,26 +19,26 @@ namespace GameShop.Data.Repository
         }
         public void createOrder(Order order)
         {
-            order.OrderTime = DateTime.Now; // регистрация даты и времени оформления заказа
-            _content.DbOrder.Add(order);    // добавление экземпляра сущности "Заказ" в таблицу DbOrder
-            _content.SaveChanges();     // сохранение изменений
-            var items = _cart.ListShopItems;    // получение списка экземпляров сущности "Элемент корзины" (т.е. заказанные игры)
+            order.OrderTime = DateTime.Now; 
+            _content.DbOrder.Add(order);
+            _content.SaveChanges();
+            var items = _cart.ListShopItems;    // get items from ShopCart
 
-            foreach (var item in items)     // создание экземпляров сущности "Детали заказа"
+            foreach (var item in items)
             {
-                var orderDetail = new OrderDetail
+                var orderDetail = new OrderDetail   // order content
                 {
                     GameId = item.Game.Id,
                     OrderId = order.Id,
                     Price = item.Game.Price
                 };
-                _content.DbOrderDetails.Add(orderDetail);   // добавление экземпляра сущности "Детали заказа" в таблицу DbOrderDetails
-                item.Game.Quantity--;   // уменьшение количества игры (расчет остатков)
-                if (item.Game.Quantity == 0) item.Game.IsAvailable = false; // проверка наличия: если количество стало нулю, товар не купить
+                _content.DbOrderDetails.Add(orderDetail);
+                item.Game.Quantity--;   // quantity calculation
+                if (item.Game.Quantity == 0) item.Game.IsAvailable = false; // check if item is available
 
             }
 
-            _content.DbShopCartItem.RemoveRange(_content.DbShopCartItem);   //очистка корзины
+            _content.DbShopCartItem.RemoveRange(_content.DbShopCartItem);   // clear ShopCart
             _content.SaveChanges();
         }
     }

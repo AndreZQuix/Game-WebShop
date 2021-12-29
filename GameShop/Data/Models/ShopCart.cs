@@ -10,15 +10,15 @@ namespace GameShop.Data.Models
     public class ShopCart
     {
         private readonly AppDBContent _content;
-        public uint InTotal { get; set; }   // сумма всех товаров в корзине
+        public uint InTotal { get; set; }   // sum of cart items prices
 
-        public ShopCart(AppDBContent _content)  // получение данных из таблицы БД
+        public ShopCart(AppDBContent _content)  // get data from database
         {
             this._content = _content;
         }
-        public string ShopCartId { get; set; }  // ID корзины
-        public List<ShopCartItem> ListShopItems { get; set; }   // товары в корзине
-        public static ShopCart GetCart(IServiceProvider services)   // получение конкретной корзины пользователя
+        public string ShopCartId { get; set; }
+        public List<ShopCartItem> ListShopItems { get; set; }
+        public static ShopCart GetCart(IServiceProvider services)   // get user cart
         {
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
             var context = services.GetService<AppDBContent>();
@@ -27,10 +27,10 @@ namespace GameShop.Data.Models
             return new ShopCart(context) { ShopCartId = shopCartId };
         }
 
-        public void AddToCart(Game game)    // добавить товар в корзину
+        public void AddToCart(Game game)
         {
-            InTotal += game.Price; // добавление цены игры к итоговой суммы
-            _content.DbShopCartItem.Add(new ShopCartItem // создание и добавление экземпляра сущности "Элемент корзины" в таблицу DbShopCartItem
+            InTotal += game.Price;
+            _content.DbShopCartItem.Add(new ShopCartItem // create and add entity "ShopCart Item" instance to DbShopCartItem
             {
                 ShopCartId = ShopCartId,
                 Game = game
@@ -39,14 +39,14 @@ namespace GameShop.Data.Models
             _content.SaveChanges();
         }
 
-        public void DeleteFromCart(int id)  // удалить товар из корзины
+        public void DeleteFromCart(int id)
         {
-            var itemToDelete = _content.DbShopCartItem.Where(c => c.Id == id).First(); // поиск подлежащего к удалению из корзины товара по ID
-            _content.DbShopCartItem.Remove(itemToDelete);   // удаление экземпляра сущности "Элементы корзины" из таблицы
+            var itemToDelete = _content.DbShopCartItem.Where(c => c.Id == id).First(); // search item to delete by ID
+            _content.DbShopCartItem.Remove(itemToDelete);
             _content.SaveChanges();
         }
 
-        public List<ShopCartItem> getShopItems()    // получить все товары корзины
+        public List<ShopCartItem> getShopItems()
         {
             return _content.DbShopCartItem.Where(c => c.ShopCartId == ShopCartId).Include(s => s.Game).ToList();
         }

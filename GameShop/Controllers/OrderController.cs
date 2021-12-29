@@ -25,21 +25,21 @@ namespace GameShop.Controllers
 
         private Order GetData(Order order)
         {
-            _cart.ListShopItems = _cart.getShopItems(); // получение данных из корзины
-            if (_cart.ListShopItems.Count == 0)  // заказ не может быть оформлен при отсутствии экземпляров сущности "Элемент корзины"
+            _cart.ListShopItems = _cart.getShopItems(); // get cart items data
+            if (_cart.ListShopItems.Count == 0)  // impossible to create order without cart items
             {
-                ModelState.AddModelError("", "Отсутствуют товары в корзине");
+                ModelState.AddModelError("", "Отсутствуют товары в корзине"); // error "Shop cart is empty"
             }
 
             if (ModelState.IsValid)
             {
-                _allOrders.createOrder(order);  // создание заказа
-                string message = order.ClientName + ", благодарим вас за покупку в цифровом магазине GameShop! \nВаш заказ был сформирован:";   // формирование электронного письма 
+                _allOrders.createOrder(order);  // order creation
+                string message = order.ClientName + ", благодарим вас за покупку в цифровом магазине GameShop! \nВаш заказ был сформирован:";   // email message creation
                 foreach (var item in order.OrderDetails)
                 {
                     message += "\n" + item.game.Name + ": 0000-0000-0000-0000";
                 }
-                _orderProcess.SendEmail(order.Email, "Заказ #" + order.Id, message);  // отправка электронного письма
+                _orderProcess.SendEmail(order.Email, "Заказ #" + order.Id, message);  // send email message
                 valid = true;
             }
             return order;
@@ -54,11 +54,11 @@ namespace GameShop.Controllers
         public IActionResult Checkout(Order order)
         {
             GetData(order);
-            if(valid) return RedirectToAction("Paid");   // перенаправление на страницу "Оплачено"
+            if(valid) return RedirectToAction("Paid");   // redirection to page "Paid"
             return View(order);
         }
 
-        public IActionResult Paid()   // страница, оповещающая об успешной работе
+        public IActionResult Paid()   // page that notifies about successful payment
         { 
             return View();
         }

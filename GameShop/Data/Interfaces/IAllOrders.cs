@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace GameShop.Data.Interfaces
 {
-    public interface IAllOrders // интерфейс репозитория сущности "Заказ"
+    public interface IAllOrders // repository interface of entity "Order" instances
     {
-        IEnumerable<Order> Orders { get; } // перечислитель, поддерживающий перебор элементов в коллекции
-        void createOrder(Order order);  // создание заказа
+        IEnumerable<Order> Orders { get; }
+        void createOrder(Order order);  // order creation
 
     }
 }

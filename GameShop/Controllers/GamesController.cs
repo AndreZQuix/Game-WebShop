@@ -21,18 +21,18 @@ namespace GameShop.Controllers
 
         private IEnumerable<Game> GetData(string category, int page = 1)
         {
-            int pageSize = 9;   // максимальное количество элементов на странице
+            int pageSize = 9;   // max number of elements on page
 
             IEnumerable<Game> games = null;
-            string currCategory = category; // категория
-            if (string.IsNullOrEmpty(category)) //если категория отсутствует,
+            string currCategory = category; 
+            if (string.IsNullOrEmpty(category)) // if category does not exist,
             {
-                games = _allGames.Games.OrderBy(i => i.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList(); // вывод всех товаров в соответствии с пагинацией
+                games = _allGames.Games.OrderBy(i => i.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList(); // show all items with pagination
                 viewModel = new GamesListViewModel(games, currCategory, _allGames.Games.Count(), page, pageSize);
             }
-            else    // если категория есть,
+            else    // if category exists,
             {
-                foreach (Category cat in _categories.Categories)    // вывод всех товаров с соотвествующей категорией в соответствии с пагинацией
+                foreach (Category cat in _categories.Categories)    // show items by category with pagination
                 {
                     if (string.Equals(cat.CategoryName, category, StringComparison.OrdinalIgnoreCase))
                     {
@@ -45,7 +45,7 @@ namespace GameShop.Controllers
             return games;
         }
 
-        [Route("Games/List")]   // атрибуты маршрутизации
+        [Route("Games/List")]   // attribute routing
         [Route("Games/List/{category}")]
         [HttpGet]
         public ViewResult List(string category, int page = 1)
